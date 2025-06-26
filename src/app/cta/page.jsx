@@ -28,7 +28,7 @@ export default function CallToActionPage() {
             className="bg-[#fbb040] text-[#1e3a8a] px-8 py-4 text-lg font-bold transition border border-[#fbb040] shadow-lg rounded-none "
           >
              
-            Demandez un rendez-vous gratuit
+            Demandez un devis
           </motion.button>
         </Link>
       </div>
