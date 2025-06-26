@@ -4,7 +4,8 @@ import Header from '../components/Header.jsx';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
 import Head from 'next/head';
-import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
+import { Suspense } from 'react';
+import AnalyticsProvider from '../components/AnalyticsProvider';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  useGoogleAnalytics();
   return (
     <html lang="fr">
       <Head>
@@ -34,6 +34,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Suspense fallback={null}>
+          <AnalyticsProvider />
+        </Suspense>
         <Header />
         <Navbar />
         {children}

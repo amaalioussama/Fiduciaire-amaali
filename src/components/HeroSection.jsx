@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import useGoogleAnalytics from "../hooks/useGoogleAnalytics";
 
 const typewriterWords = [
   'Votre',
