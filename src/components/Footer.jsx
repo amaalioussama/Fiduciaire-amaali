@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FaPhoneAlt, FaEnvelope, FaFacebookF, FaLinkedinIn } from 'react-icons/fa';
+import { FaPhoneAlt, FaEnvelope, FaFacebookF, FaLinkedinIn, FaRegClock } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -24,6 +24,10 @@ export default function Footer() {
           </div>
           <div className="text-sm opacity-80">
             N°10, 1er Etage, Imam El Boukhari Bouargane, 80000 Agadir Maroc
+          </div>
+          <div className="flex items-center gap-2 mt-1">
+            <FaRegClock className="text-[#fbb040]" />
+            <span>Lun-Ven : 9:00 - 18:00&nbsp;|&nbsp;Sam-Dim : Fermé</span>
           </div>
         </div>
         {/* Liens Rapides */}

@@ -49,8 +49,8 @@ export default function ContactPage() {
       </div>
       {/* Formulaire à droite */}
       <div className="md:w-1/2 w-full bg-[#1e3a8a] flex flex-col justify-center items-center py-12 px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Demander un devis</h2>
-        <p className="text-white mb-8">Entrez simplement vos informations, c'est 100% gratuit et sans engagement.</p>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Faites-vous rappeler</h2>
+        <p className="text-white mb-8">Un chargé de clientèle vous recontactera dans les plus brefs délais. </p>
         <form ref={formRef} onSubmit={handleSubmit} className="w-full max-w-md flex flex-col gap-4">
           <input type="text" name="name" required placeholder="Nom complet*" className="px-4 py-3 rounded-none border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#fbb040] text-white placeholder-gray-300" />
           <input type="email" name="email" required placeholder="Votre email*" className="px-4 py-3 rounded-none border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#fbb040] text-white placeholder-gray-300" />

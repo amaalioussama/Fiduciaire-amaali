@@ -4,34 +4,22 @@ import { motion } from 'framer-motion';
 
 const services = [
   {
-    icon: <FaBookOpen className="text-4xl text-[#1e3a8a] mb-4" />,
-    title: 'Gestion de la Comptabilité',
-    color: 'border-[#1e3a8a]',
-    desc: "Nous gérons votre comptabilité en conformité avec les normes marocaines. Nous automatisons la tenue des livres, la préparation des bilans et des déclarations fiscales. Vous accédez à vos données en temps réel, facilitant ainsi une gestion plus rapide et efficace. Nos solutions réduisent les erreurs et garantissent une conformité fiscale continue. Vous bénéficiez d'une gestion optimisée, vous permettant de mieux suivre la santé financière de votre entreprise. "
-  },
-  {
-    icon: <FaCalculator className="text-4xl text-yellow-600 mb-4" />,
-    title: 'Fiscalité',
-    color: 'border-yellow-600',
-    desc: "Optimisez votre fiscalité avec l'aide de nos experts. Nous vous proposons des conseils personnalisés pour réduire vos impôts et assurer votre conformité aux obligations fiscales marocaines. Nous couvrons la déclaration de la TVA, l'impôt sur les sociétés, et d'autres aspects fiscaux complexes."
-  },
-  {
-    icon: <FaMoneyCheckAlt className="text-4xl text-[#1e3a8a] mb-4" />,
-    title: 'Gestion de la Paie',
-    color: 'border-[#1e3a8a]',
-    desc: "La gestion de la paie est cruciale pour le bon fonctionnement de votre entreprise. Nous prenons en charge la préparation des fiches de paie, la gestion des cotisations sociales, et la conformité avec la législation du travail au Maroc."
-  },
-  {
-    icon: <FaFileInvoiceDollar className="text-4xl text-yellow-600 mb-4" />,
-    title: 'Facturation',
-    color: 'border-yellow-600',
-    desc: "Simplifiez votre processus de facturation avec notre service. Nous vous aidons à générer des factures conformes à la réglementation, à suivre vos paiements, et à gérer les relances. Vous gagnerez en efficacité et pourrez vous concentrer sur la croissance de votre entreprise."
-  },
-  {
     icon: <FaGavel className="text-4xl text-[#1e3a8a] mb-4" />,
     title: 'Juridique',
     color: 'border-[#1e3a8a]',
     desc: "notre équipe  prend en charge toutes les démarches juridiques nécessaires à la création et au développement de votre entreprise. Nous nous occupons de la rédaction des statuts, de l'obtention du certificat négatif, de l'accomplissement des formalités auprès du greffe, ainsi que de la publication dans un journal d'annonces légales. Nous préparons également les procès-verbaux des assemblées générales ordinaires ou extraordinaires et assurons la tenue des registres légaux."
+  },
+  {
+    icon: <FaBookOpen className="text-4xl text-yellow-600 mb-4" />,
+    title: 'Gestion de la Comptabilité',
+    color: 'border-yellow-600',
+    desc: "Nous gérons votre comptabilité en conformité avec les normes marocaines. Nous automatisons la tenue des livres, la préparation des bilans et des déclarations fiscales. Vous accédez à vos données en temps réel, facilitant ainsi une gestion plus rapide et efficace. Nos solutions réduisent les erreurs et garantissent une conformité fiscale continue. Vous bénéficiez d'une gestion optimisée, vous permettant de mieux suivre la santé financière de votre entreprise. "
+  },
+  {
+    icon: <FaCalculator className="text-4xl text-[#1e3a8a] mb-4" />,
+    title: 'Fiscalité',
+    color: 'border-[#1e3a8a]',
+    desc: "Nos services fiscaux comprennent la préparation de toutes les déclarations fiscales pour les sociétés, les entreprises individuelles et les particuliers. Nous proposons également une assistance personnalisée en cas de contrôle fiscal, assurant ainsi une défense solide de vos intérêts. De plus, nous gérons efficacement la télédéclaration de vos déclarations fiscales, vous offrant ainsi un service complet."
   },
   {
     icon: <FaHandshake className="text-4xl text-yellow-600 mb-4" />,
@@ -39,7 +27,19 @@ const services = [
     color: 'border-yellow-600',
     desc: "Nous assurons également la gestion sociale de vos employés, en prenant en charge les déclarations et les démarches nécessaires pour respecter les obligations légales. Nous veillons à la conformité des cotisations sociales, des assurances, ainsi que des contributions diverses. Nous vous conseillons également sur les meilleures pratiques en matière de gestion du personnel et d'optimisation des coûts sociaux"
   },
-  ];
+  {
+    icon: <FaFileInvoiceDollar className="text-4xl text-[#1e3a8a] mb-4" />,
+    title: 'Digitalisation de la Facturation',
+    color: 'border-[#1e3a8a]',
+    desc: "Simplifiez et digitalisez votre processus de facturation avec notre service. Nous vous aidons à générer des factures conformes à la réglementation, à suivre vos paiements, et à gérer les relances. Vous gagnerez en efficacité et pourrez vous concentrer sur la croissance de votre entreprise."
+  },
+  {
+    icon: <FaMoneyCheckAlt className="text-4xl text-yellow-600 mb-4" />,
+    title: 'Gestion de la Paie',
+    color: 'border-yellow-600',
+    desc: "La gestion de la paie est cruciale pour le bon fonctionnement de votre entreprise. Nous prenons en charge la préparation des fiches de paie, la gestion des cotisations sociales, et la conformité avec la législation du travail au Maroc."
+  },
+];
 
 const boxVariants = {
   hidden: { opacity: 0, y: 40 },
