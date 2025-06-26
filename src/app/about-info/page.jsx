@@ -41,7 +41,7 @@ function Counter({ to, duration = 1500, className }) {
 
 export default function AboutInfoPage() {
   return (
-    <section className="w-full min-h-screen bg-[#f4f7fa] py-16 px-4">
+    <section id="about" className="w-full min-h-screen bg-[#f4f7fa] py-16 px-4">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 mb-16">
         {/* Image à gauche */}
         <div className="flex-1 flex justify-center">
@@ -51,7 +51,7 @@ export default function AboutInfoPage() {
         </div>
         {/* Texte à droite */}
         <div className="flex-1 flex flex-col justify-center items-start">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] mb-4"><span className="text-yellow-600">23 ans</span> d'expérience au service de nos clients</h2>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] mb-4"><span className="text-yellow-600">25 ans</span> d'expérience au service de nos clients</h2>
           <p className="text-lg text-gray-800 mb-6">
             Animée par la volonté de capitaliser une longue expérience probante et riche dans le domaine du Conseil et du Management, la fiduciaire <span className="font-bold text-[#1e3a8a]">AMAALI SARL</span> a été fondée en 2000 par <span className="font-bold text-[#1e3a8a]">M. AMAALI ABDESLAM</span> pour offrir un large panel de services pluridisciplinaires aux investisseurs souhaitant s'implanter au Maroc.<br/><br/>
             Nos services sont basés sur le respect de trois principes fondamentaux : <span className="font-bold text-yellow-600">Excellence</span>, <span className="font-bold text-yellow-600">Professionnalisme</span> & <span className="font-bold text-yellow-600">Proximité</span>.<br/><br/>
@@ -94,7 +94,7 @@ export default function AboutInfoPage() {
           </div>
           <div>
             <div className="absolute -left-5 top-1 w-4 h-4 bg-yellow-600 rounded-full border-4 border-white"></div>
-            <span className="font-bold text-[#1e3a8a]">2023</span> — Plus de 350 clients accompagnés, une équipe de 10 consultants expérimentés.
+            <span className="font-bold text-[#1e3a8a]">2023</span> — Plus de 350 clients accompagnés.
           </div>
         </div>
       </div>

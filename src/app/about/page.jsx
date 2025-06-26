@@ -14,7 +14,7 @@ export default function AboutPage() {
       </div>
       {/* Texte à droite */}
       <div className="flex-1 flex flex-col justify-center items-start md:pl-12">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4"><span className="text-yellow-600">23 ans</span> d'expertise au service des investisseurs au Maroc</h2>
+        <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4"><span className="text-yellow-600">25 ans</span> d'expertise au service des investisseurs au Maroc</h2>
         <p className="text-lg text-white mb-6 max-w-xl">
           La fiduciaire <span className="font-bold text-yellow-600">AMAALI SARL</span> est une société fiduciaire ainsi qu'un cabinet de conseil et de formation, spécialisé dans la coordination et l'accompagnement d'investisseurs potentiels souhaitant s'implanter au Maroc.<br/><br/>
           Fondée en 2000 par son gérant, <span className="font-bold text-yellow-600">M. AMAALI ABDESLAM</span>, notre équipe accompagne depuis plus de 20 ans des entrepreneurs et entreprises dans toutes leurs démarches administratives, fiscales et stratégiques, avec un engagement fort pour l'excellence, la proximité et la réussite de vos projets.

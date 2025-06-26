@@ -17,7 +17,7 @@ export default function Footer() {
         <div>
           <h3 className="font-bold text-lg mb-3">Contact</h3>
           <div className="flex items-center gap-2 mb-2 text-sm">
-            <FaPhoneAlt className="text-[#fbb040]" /> 05 22 86 51 11
+            <FaPhoneAlt className="text-[#fbb040]" /> +212 5 28 22 04 03
           </div>
           <div className="flex items-center gap-2 text-sm mb-2">
             <FaEnvelope className="text-[#fbb040]" /> fiduciaire.fiduam@gmail.com

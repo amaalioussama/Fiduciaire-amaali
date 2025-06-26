@@ -48,15 +48,15 @@ export default function ContactPage() {
         ></iframe>
       </div>
       {/* Formulaire à droite */}
-      <div className="md:w-1/2 w-full bg-gray-100 flex flex-col justify-center items-center py-12 px-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a8a] mb-2">Contactez-nous gratuitement</h2>
-        <p className="text-[#1e3a8a] mb-8">Entrez simplement vos informations, c'est 100% gratuit et sans engagement.</p>
+      <div className="md:w-1/2 w-full bg-[#1e3a8a] flex flex-col justify-center items-center py-12 px-6">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Réservez un devis</h2>
+        <p className="text-white mb-8">Entrez simplement vos informations, c'est 100% gratuit et sans engagement.</p>
         <form ref={formRef} onSubmit={handleSubmit} className="w-full max-w-md flex flex-col gap-4">
-          <input type="text" name="name" required placeholder="Nom complet*" className="px-4 py-3 rounded-none border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#fbb040]" />
-          <input type="email" name="email" required placeholder="Votre email*" className="px-4 py-3 rounded-none border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#fbb040]" />
-          <input type="tel" name="phone" placeholder="Numéro de téléphone" className="px-4 py-3 rounded-none border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#fbb040]" />
-          <textarea name="message" rows={5} required placeholder="Votre message*" className="px-4 py-3 rounded-none border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#fbb040]" />
-          <button type="submit" disabled={loading} className="bg-[#1e3a8a] text-white px-8 py-4 text-lg font-bold transition border border-[#1e3a8a] w-full sm:w-auto shadow-lg disabled:opacity-60">
+          <input type="text" name="name" required placeholder="Nom complet*" className="px-4 py-3 rounded-none border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#fbb040] text-white placeholder-gray-300" />
+          <input type="email" name="email" required placeholder="Votre email*" className="px-4 py-3 rounded-none border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#fbb040] text-white placeholder-gray-300" />
+          <input type="tel" name="phone" placeholder="Numéro de téléphone" className="px-4 py-3 rounded-none border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#fbb040] text-white placeholder-gray-300" />
+          <textarea name="message" rows={5} required placeholder="Votre message*" className="px-4 py-3 rounded-none border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#fbb040] text-white placeholder-gray-300" />
+          <button type="submit" disabled={loading} className="bg-[#fbb040] text-[#1e3a8a] px-8 py-4 text-lg font-bold transition border border-[#1e3a8a] w-full sm:w-auto shadow-lg disabled:opacity-60">
             {loading ? "Envoi en cours..." : "Envoyer"}
           </button>
         </form>

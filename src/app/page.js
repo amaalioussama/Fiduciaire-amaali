@@ -26,7 +26,7 @@ export default function Home() {
       <motion.div {...sectionAnim} id="hero"><HeroSection /></motion.div>
       <motion.div {...sectionAnim} id="services"><ServicesPage /></motion.div>
       <motion.div {...sectionAnim} id="about"><AboutPage /></motion.div>
-      <motion.div {...sectionAnim} id="testimonials"><TestimonialsPage /></motion.div>
+      {/* <motion.div {...sectionAnim} id="testimonials"><TestimonialsPage /></motion.div> */}
       <motion.div {...sectionAnim} id="cta"><CallToActionPage /></motion.div>
       <motion.div {...sectionAnim} id="contact"><ContactPage /></motion.div>
       

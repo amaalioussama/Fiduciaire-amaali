@@ -13,9 +13,9 @@ export default function CallToActionPage() {
     }
   }, []);
   return (
-    <section className="w-full bg-[#1e3a8a] py-16 flex justify-center items-center">
+    <section className="w-full bg-gray-100 py-16 flex justify-center items-center">
       <div className="max-w-2xl w-full mx-auto flex flex-col items-center text-center px-4">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Prêt à simplifier votre gestion financière&nbsp;?</h2>
+        <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] mb-4">Prêt à simplifier votre gestion financière&nbsp;?</h2>
         <p className="text-lg text-[#fbb040] mb-8">Profitez d'un accompagnement personnalisé et d'une expertise reconnue pour votre entreprise.</p>
         <Link href="/contact">
           <motion.button

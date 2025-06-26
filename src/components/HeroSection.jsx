@@ -72,9 +72,9 @@ export default function HeroSection() {
         <p className="text-[#fbbf24] text-2xl md:text-3xl mb-6 drop-shadow-lg font-semibold text-center md:text-left">Profitez de notre expertise pour démarrer sereinement votre activité.</p>
         <div className="w-24 h-1 bg-[#bfa046] mb-8" />
         <ul className="mb-8 space-y-4">
-          <li className="flex items-center gap-3 text-lg md:text-xl text-white font-medium drop-shadow"><FaCheckCircle className="text-[#bfa046] text-2xl" /> Accompagnement personnalisé pour chaque étape</li>
-          <li className="flex items-center gap-3 text-lg md:text-xl text-white font-medium drop-shadow"><FaCheckCircle className="text-[#bfa046] text-2xl" /> Conseils fiscaux et juridiques adaptés</li>
-          <li className="flex items-center gap-3 text-lg md:text-xl text-white font-medium drop-shadow"><FaCheckCircle className="text-[#bfa046] text-2xl" /> Suivi digitalisé et réactif</li>
+          <li className="flex items-center gap-3 text-lg md:text-xl text-white font-medium drop-shadow"><FaCheckCircle className="text-[#bfa046] text-2xl" /> Optimisation de Votre Comptabilité</li>
+          <li className="flex items-center gap-3 text-lg md:text-xl text-white font-medium drop-shadow"><FaCheckCircle className="text-[#bfa046] text-2xl" /> Conformité Fiscale Assurée</li>
+          <li className="flex items-center gap-3 text-lg md:text-xl text-white font-medium drop-shadow"><FaCheckCircle className="text-[#bfa046] text-2xl" /> Suivi et Accessibilité Digitalisés</li>
         </ul>
         <div className="flex flex-col sm:flex-row gap-6 w-full md:w-auto">
           <button
