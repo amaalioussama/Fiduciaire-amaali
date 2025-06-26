@@ -4,6 +4,7 @@ import Header from '../components/Header.jsx';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
 import Head from 'next/head';
+import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,21 +25,11 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  useGoogleAnalytics();
   return (
     <html lang="fr">
       <Head>
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-TF2CWFGZMX"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-TF2CWFGZMX');
-            `,
-          }}
-        />
+        {/* Google Analytics tracking is handled by react-ga4 */}
       </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
