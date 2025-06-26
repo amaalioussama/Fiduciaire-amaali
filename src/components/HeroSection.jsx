@@ -81,7 +81,7 @@ export default function HeroSection() {
             onClick={() => handleScrollTo('contact')}
             className="bg-[#1e3a8a] text-white px-8 py-4 text-lg font-bold transition border border-[#1e3a8a] w-full sm:w-auto shadow-lg rounded-none hover:scale-105 hover:shadow-2xl active:scale-95 duration-300 animate-fade-in-up"
           >
-            Prendre rendez-vous
+        Demander un devis
           </button>
           <button
             onClick={() => handleScrollTo('services')}
