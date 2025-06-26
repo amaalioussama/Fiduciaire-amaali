@@ -1,3 +1,4 @@
+"use client";
 import { useEffect } from 'react';
 import ReactGA from 'react-ga4';
 import { usePathname, useSearchParams } from 'next/navigation';
