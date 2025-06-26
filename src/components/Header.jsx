@@ -39,7 +39,7 @@ export default function Header() {
             onClick={handleScrollToContact}
             className="bg-white text-[#1e3a8a] px-4 py-2 font-semibold border border-[#1e3a8a] transition flex items-center gap-2 shadow-lg rounded-none hover:scale-105 hover:shadow-2xl active:scale-95 duration-300"
           >
-            <span className="text-lg">📅</span> Réservez un devis  !
+            <span className="text-lg">📅</span> Demander un devis !
           </button>
           <a href="#" className="text-white hover:text-yellow-600"><FaFacebookF /></a>
           <a href="#" className="text-white hover:text-yellow-600"><FaInstagram /></a>
