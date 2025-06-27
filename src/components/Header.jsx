@@ -39,7 +39,7 @@ export default function Header() {
           </span>
           <span className="flex items-center gap-2 text-white">
             <FaRegClock className="text-lg" />
-            <span>Lun-Ven : 9:00 - 18:00 | Sam-Dim : Fermé</span>
+            <span>Lun-Ven : 9:00 - 17:00 | Sam : 9:00 - 13:00 </span>
           </span>
         </div>
         <div className="flex items-center gap-3 mt-2 sm:mt-0">

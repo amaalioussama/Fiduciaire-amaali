@@ -27,7 +27,7 @@ export default function Footer() {
           </div>
           <div className="flex items-center gap-2 mt-1">
             <FaRegClock className="text-[#fbb040]" />
-            <span>Lun-Ven : 9:00 - 18:00&nbsp;|&nbsp;Sam-Dim : Fermé</span>
+            <span>Lun-Ven : 9:00 - 18:00&nbsp;|&nbsp; Sam : 9:00 - 13:00</span>
           </div>
         </div>
         {/* Liens Rapides */}
