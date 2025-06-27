@@ -19,7 +19,7 @@ const services = [
     icon: <FaCalculator className="text-4xl text-[#1e3a8a] mb-4" />,
     title: 'Fiscalité',
     color: 'border-[#1e3a8a]',
-    desc: "Nos services fiscaux comprennent la préparation de toutes les déclarations fiscales pour les sociétés, les entreprises individuelles et les particuliers. Nous proposons également une assistance personnalisée en cas de contrôle fiscal, assurant ainsi une défense solide de vos intérêts. De plus, nous gérons efficacement la télédéclaration de vos déclarations fiscales, vous offrant ainsi un service complet."
+    desc: "Nos services fiscaux comprennent la préparation de toutes les déclarations fiscales pour les sociétés, les entreprises individuelles et les particuliers. Nous proposons également une assistance personnalisée en cas de contrôle fiscal, assurant ainsi une défense solide de vos intérêts. De plus, nous gérons efficacement la télédéclaration de vos déclarations fiscales, vous offrant ainsi un service complet."
   },
   {
     icon: <FaHandshake className="text-4xl text-yellow-600 mb-4" />,
@@ -33,12 +33,7 @@ const services = [
     color: 'border-[#1e3a8a]',
     desc: "Simplifiez et digitalisez votre processus de facturation avec notre service. Nous vous aidons à générer des factures conformes à la réglementation, à suivre vos paiements, et à gérer les relances. Vous gagnerez en efficacité et pourrez vous concentrer sur la croissance de votre entreprise."
   },
-  {
-    icon: <FaMoneyCheckAlt className="text-4xl text-yellow-600 mb-4" />,
-    title: 'Gestion de la Paie',
-    color: 'border-yellow-600',
-    desc: "La gestion de la paie est cruciale pour le bon fonctionnement de votre entreprise. Nous prenons en charge la préparation des fiches de paie, la gestion des cotisations sociales, et la conformité avec la législation du travail au Maroc."
-  },
+ 
 ];
 
 const boxVariants = {
@@ -55,11 +50,13 @@ export default function ServicesPage() {
         <p className="text-center text-lg text-gray-700 mb-12 max-w-2xl mx-auto">
           Nous proposons une gamme complète de services comptables et financiers pour aider votre entreprise à prospérer, avec une approche personnalisée et professionnelle.
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {services.map((s, i) => (
             <motion.div
               key={s.title}
-              className={`bg-white shadow-xl rounded-none p-8 flex flex-col items-center text-center border-t-4 ${s.color} transition duration-300 hover:shadow-2xl hover:-translate-y-2`}
+              className={`bg-white shadow-xl rounded-none p-8 flex flex-col items-center text-center border-t-4 ${s.color} transition duration-300 hover:shadow-2xl hover:-translate-y-2 ${
+                i === 4 ? 'md:col-span-2 md:max-w-md md:mx-auto' : ''
+              }`}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
