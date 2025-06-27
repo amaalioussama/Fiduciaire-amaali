@@ -44,7 +44,7 @@ export default function Footer() {
       {/* Bas de page */}
       <div className="bg-[#1e3a8a] text-white text-sm flex flex-col md:flex-row items-center justify-between gap-4 px-4 py-4 mt-8">
         <div>
-          @ 2025 <span className="text-[#fbb040] font-bold">FiduciaireAmaali</span> Tous droits réservés.
+          @ 2025 <span className="text-[#fbb040] font-bold">Fiduciaire Amaali</span> Tous droits réservés.
         </div>
         <div className="flex gap-2">
           <a href="#" className="bg-[#1e3a8a] hover:bg-[#fbb040] hover:text-[#1e3a8a] p-2"><FaFacebookF /></a>
