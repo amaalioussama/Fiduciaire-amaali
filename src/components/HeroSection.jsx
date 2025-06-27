@@ -97,7 +97,7 @@ export default function HeroSection() {
             onClick={() => handleScrollTo('services')}
             className="bg-[#bfa046] text-white px-8 py-4 text-lg font-bold transition border border-[#bfa046] w-full sm:w-auto shadow-lg rounded-none hover:scale-105 hover:shadow-2xl active:scale-95 duration-300 animate-fade-in-up"
           >
-            Services Fiduciaire et Comptable
+            Nos Services 
           </button>
         </div>
       </div>
