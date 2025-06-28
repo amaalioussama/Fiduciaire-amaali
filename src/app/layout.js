@@ -3,7 +3,6 @@ import "./globals.css";
 import Header from '../components/Header.jsx';
 import Navbar from '../components/Navbar.jsx';
 import Footer from '../components/Footer.jsx';
-import Head from 'next/head';
 import { Suspense } from 'react';
 import AnalyticsProvider from '../components/AnalyticsProvider';
 import StructuredData from '../components/StructuredData';
@@ -78,9 +77,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
-      <Head>
-        {/* Google Analytics tracking is handled by react-ga4 */}
-      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
