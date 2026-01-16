@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import toast, { Toaster } from 'react-hot-toast';
 
 export default function RecipeEditor() {
   const { data: session, status } = useSession();
@@ -16,6 +15,7 @@ export default function RecipeEditor() {
   const [saving, setSaving] = useState(false);
   const [imagePreview, setImagePreview] = useState('');
   const [imageType, setImageType] = useState('url'); // 'url' or 'upload'
+  const [message, setMessage] = useState({ type: '', text: '' });
   
   const [recipe, setRecipe] = useState({
     title: '',
@@ -23,6 +23,11 @@ export default function RecipeEditor() {
     image: '',
     isPublished: false,
   });
+
+  const showMessage = (type, text) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage({ type: '', text: '' }), 4000);
+  };
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -46,8 +51,8 @@ export default function RecipeEditor() {
         setRecipe(data.recipe);
         setImagePreview(data.recipe.image || '');
       }
-    } catch (error) {
-      toast.error('Error loading recipe');
+    } catch (err) {
+      showMessage('error', 'Error loading recipe');
     } finally {
       setLoading(false);
     }
@@ -62,19 +67,19 @@ export default function RecipeEditor() {
     }
   };
 
-  const handleImageUpload = async (e) => {
+  const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
-      toast.error('Please select an image file');
+      showMessage('error', 'Please select an image file');
       return;
     }
 
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('Image must be less than 5MB');
+      showMessage('error', 'Image must be less than 5MB');
       return;
     }
 
@@ -90,7 +95,7 @@ export default function RecipeEditor() {
 
   const handleSubmit = async (publish = false) => {
     if (!recipe.title.trim()) {
-      toast.error('Please enter a recipe title');
+      showMessage('error', 'Please enter a recipe title');
       return;
     }
 
@@ -128,14 +133,13 @@ export default function RecipeEditor() {
         throw new Error(data.error || 'An error occurred');
       }
 
-      toast.success(isEditing ? 'Recipe updated!' : 'Recipe created!');
+      showMessage('success', isEditing ? 'Recipe updated!' : 'Recipe created!');
       
       setTimeout(() => {
         router.push('/admin/dashboard');
       }, 1000);
-    } catch (error) {
-      const errorMessage = error?.message || 'An error occurred';
-      toast.error(errorMessage);
+    } catch (err) {
+      showMessage('error', err.message || 'An error occurred');
     } finally {
       setSaving(false);
     }
@@ -151,7 +155,14 @@ export default function RecipeEditor() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Toaster position="top-center" />
+      {/* Message Toast */}
+      {message.text && (
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg ${
+          message.type === 'error' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
+        }`}>
+          {message.text}
+        </div>
+      )}
       
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-10">
