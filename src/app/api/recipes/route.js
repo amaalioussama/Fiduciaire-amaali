@@ -66,8 +66,6 @@ export async function POST(request) {
   try {
     const session = await getServerSession(authOptions);
     
-    console.log('Session in POST /api/recipes:', session);
-    
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized - Please login first' }, { status: 401 });
     }
@@ -75,18 +73,17 @@ export async function POST(request) {
     await dbConnect();
 
     const body = await request.json();
-    console.log('Recipe body received:', body);
-    
-    // Author is optional - use session user id if available
-    if (session.user?.id) {
-      body.author = session.user.id;
-    }
 
-    const recipe = await Recipe.create(body);
-    console.log('Recipe created:', recipe._id);
+    const recipe = await Recipe.create({
+      title: body.title,
+      description: body.description || '',
+      image: body.image || '/images/default-recipe.jpg',
+      isPublished: body.isPublished || false,
+    });
 
     return NextResponse.json({ recipe }, { status: 201 });
-  } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (err) {
+    console.error('Error creating recipe:', err);
+    return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
   }
 }
