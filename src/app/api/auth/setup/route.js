@@ -32,13 +32,11 @@ export async function POST(request) {
 
     const body = await request.json();
     
-    // Hash password manually
-    const hashedPassword = await bcrypt.hash(body.password, 12);
-    
+    // Create admin with plain password - the User model will hash it
     const admin = await User.create({
       name: body.name || 'Admin',
       email: body.email,
-      password: hashedPassword,
+      password: body.password,  // Let the model's pre-save hook hash this
       role: 'admin',
     });
 
