@@ -125,7 +125,7 @@ export default function RecipeEditor() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error);
+        throw new Error(data.error || 'An error occurred');
       }
 
       toast.success(isEditing ? 'Recipe updated!' : 'Recipe created!');
@@ -134,7 +134,8 @@ export default function RecipeEditor() {
         router.push('/admin/dashboard');
       }, 1000);
     } catch (error) {
-      toast.error(error.message);
+      const errorMessage = error?.message || 'An error occurred';
+      toast.error(errorMessage);
     } finally {
       setSaving(false);
     }
