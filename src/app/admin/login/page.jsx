@@ -3,17 +3,22 @@
 import { useState, useEffect } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import toast, { Toaster } from 'react-hot-toast';
 
 export default function AdminLogin() {
   const [isSetup, setIsSetup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checkingSetup, setCheckingSetup] = useState(true);
+  const [message, setMessage] = useState({ type: '', text: '' });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
   });
+
+  const showMessage = (type, text) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage({ type: '', text: '' }), 4000);
+  };
 
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -58,7 +63,7 @@ export default function AdminLogin() {
         throw new Error(data.error);
       }
 
-      toast.success('Account created! Logging in...');
+      showMessage('success', 'Account created! Logging in...');
       setIsSetup(false);
       
       // Auto login after setup
@@ -71,8 +76,8 @@ export default function AdminLogin() {
       if (result?.ok) {
         router.push('/admin/dashboard');
       }
-    } catch (error) {
-      toast.error(error.message);
+    } catch (err) {
+      showMessage('error', err.message || 'Error');
     } finally {
       setLoading(false);
     }
@@ -90,13 +95,13 @@ export default function AdminLogin() {
       });
 
       if (result?.error) {
-        toast.error(result.error);
+        showMessage('error', result.error);
       } else {
-        toast.success('Login successful!');
+        showMessage('success', 'Login successful!');
         router.push('/admin/dashboard');
       }
-    } catch (error) {
-      toast.error('Login error');
+    } catch (err) {
+      showMessage('error', 'Login error');
     } finally {
       setLoading(false);
     }
@@ -112,7 +117,14 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-100 to-amber-50 px-4">
-      <Toaster position="top-center" />
+      {/* Message Toast */}
+      {message.text && (
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg ${
+          message.type === 'error' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
+        }`}>
+          {message.text}
+        </div>
+      )}
       
       <div className="max-w-md w-full">
         <div className="bg-white rounded-2xl shadow-xl p-8">

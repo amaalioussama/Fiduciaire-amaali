@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import toast, { Toaster } from 'react-hot-toast';
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [message, setMessage] = useState({ type: '', text: '' });
   const [stats, setStats] = useState({
     total: 0,
     published: 0,
@@ -17,6 +17,11 @@ export default function AdminDashboard() {
   });
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const showMessage = (type, text) => {
+    setMessage({ type, text });
+    setTimeout(() => setMessage({ type: '', text: '' }), 4000);
+  };
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -48,8 +53,8 @@ export default function AdminDashboard() {
           views: totalViews,
         });
       }
-    } catch (error) {
-      toast.error('Error loading data');
+    } catch (err) {
+      showMessage('error', 'Error loading data');
     } finally {
       setLoading(false);
     }
@@ -62,13 +67,13 @@ export default function AdminDashboard() {
       const res = await fetch(`/api/recipes/${id}`, { method: 'DELETE' });
       
       if (res.ok) {
-        toast.success('Recipe deleted');
+        showMessage('success', 'Recipe deleted');
         fetchRecipes();
       } else {
-        toast.error('Error deleting recipe');
+        showMessage('error', 'Error deleting recipe');
       }
-    } catch (error) {
-      toast.error('Error deleting recipe');
+    } catch (err) {
+      showMessage('error', 'Error deleting recipe');
     }
   };
 
@@ -81,11 +86,11 @@ export default function AdminDashboard() {
       });
       
       if (res.ok) {
-        toast.success(recipe.isPublished ? 'Recipe unpublished' : 'Recipe published');
+        showMessage('success', recipe.isPublished ? 'Recipe unpublished' : 'Recipe published');
         fetchRecipes();
       }
-    } catch (error) {
-      toast.error('Error');
+    } catch (err) {
+      showMessage('error', 'Error');
     }
   };
 
@@ -103,7 +108,14 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Toaster position="top-center" />
+      {/* Message Toast */}
+      {message.text && (
+        <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg ${
+          message.type === 'error' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
+        }`}>
+          {message.text}
+        </div>
+      )}
       
       {/* Header */}
       <header className="bg-white shadow-sm">
