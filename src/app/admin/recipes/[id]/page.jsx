@@ -103,18 +103,9 @@ export default function RecipeEditor() {
     
     const recipeData = {
       title: recipe.title,
-      description: recipe.description || 'Delicious recipe',
+      description: recipe.description || '',
       image: recipe.image || '/images/default-recipe.jpg',
       isPublished: publish ? true : recipe.isPublished,
-      // Default values for required fields
-      prepTime: 15,
-      cookTime: 30,
-      servings: 4,
-      difficulty: 'Easy',
-      category: 'Main Dishes',
-      cuisine: 'International',
-      ingredients: [{ name: 'Ingredient', quantity: '1', unit: 'piece' }],
-      instructions: [{ step: 1, description: 'Prepare and enjoy!' }],
     };
 
     try {
