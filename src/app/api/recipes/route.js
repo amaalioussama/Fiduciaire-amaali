@@ -66,16 +66,24 @@ export async function POST(request) {
   try {
     const session = await getServerSession(authOptions);
     
+    console.log('Session in POST /api/recipes:', session);
+    
     if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized - Please login first' }, { status: 401 });
     }
 
     await dbConnect();
 
     const body = await request.json();
-    body.author = session.user.id;
+    console.log('Recipe body received:', body);
+    
+    // Author is optional - use session user id if available
+    if (session.user?.id) {
+      body.author = session.user.id;
+    }
 
     const recipe = await Recipe.create(body);
+    console.log('Recipe created:', recipe._id);
 
     return NextResponse.json({ recipe }, { status: 201 });
   } catch (error) {

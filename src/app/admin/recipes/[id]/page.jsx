@@ -121,13 +121,18 @@ export default function RecipeEditor() {
       const url = isEditing ? `/api/recipes/${params.id}` : '/api/recipes';
       const method = isEditing ? 'PUT' : 'POST';
 
+      console.log('Sending recipe data:', recipeData);
+
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(recipeData),
       });
 
+      console.log('Response status:', res.status);
+
       const data = await res.json();
+      console.log('Response data:', data);
 
       if (!res.ok) {
         throw new Error(data.error || 'An error occurred');
@@ -137,8 +142,9 @@ export default function RecipeEditor() {
       
       setTimeout(() => {
         router.push('/admin/dashboard');
-      }, 1000);
+      }, 1500);
     } catch (err) {
+      console.error('Error saving recipe:', err);
       showMessage('error', err.message || 'An error occurred');
     } finally {
       setSaving(false);
