@@ -1,6 +1,6 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "name": "fiduam-recipes",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -9,14 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "date-fns": "^4.1.0",
     "framer-motion": "^12.19.1",
+    "mongoose": "^9.1.3",
     "next": "15.3.4",
+    "next-auth": "^4.24.13",
     "nodemailer": "^7.0.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-ga4": "^2.1.0",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
+    "slugify": "^1.6.6",
     "swiper": "^11.2.8"
   },
   "devDependencies": {
