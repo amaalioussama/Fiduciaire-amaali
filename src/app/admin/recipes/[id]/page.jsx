@@ -6,19 +6,6 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import toast, { Toaster } from 'react-hot-toast';
 
-const CATEGORIES = [
-  'Starters',
-  'Main Dishes',
-  'Desserts',
-  'Salads',
-  'Soups',
-  'Snacks',
-  'Drinks',
-  'Breakfast',
-];
-
-const DIFFICULTIES = ['Easy', 'Medium', 'Hard'];
-
 export default function RecipeEditor() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -27,23 +14,15 @@ export default function RecipeEditor() {
   
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [imagePreview, setImagePreview] = useState('');
+  const [imageType, setImageType] = useState('url'); // 'url' or 'upload'
+  
   const [recipe, setRecipe] = useState({
     title: '',
     description: '',
     image: '',
-    prepTime: 15,
-    cookTime: 30,
-    servings: 4,
-    difficulty: 'Easy',
-    category: 'Main Dishes',
-    cuisine: 'International',
-    ingredients: [{ name: '', quantity: '', unit: '' }],
-    instructions: [{ step: 1, description: '' }],
-    tags: [],
     isPublished: false,
-    isFeatured: false,
   });
-  const [tagInput, setTagInput] = useState('');
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -65,6 +44,7 @@ export default function RecipeEditor() {
       
       if (data.recipe) {
         setRecipe(data.recipe);
+        setImagePreview(data.recipe.image || '');
       }
     } catch (error) {
       toast.error('Error loading recipe');
@@ -74,79 +54,62 @@ export default function RecipeEditor() {
   };
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setRecipe(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
-  const handleIngredientChange = (index, field, value) => {
-    const newIngredients = [...recipe.ingredients];
-    newIngredients[index][field] = value;
-    setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
-  };
-
-  const addIngredient = () => {
-    setRecipe(prev => ({
-      ...prev,
-      ingredients: [...prev.ingredients, { name: '', quantity: '', unit: '' }],
-    }));
-  };
-
-  const removeIngredient = (index) => {
-    setRecipe(prev => ({
-      ...prev,
-      ingredients: prev.ingredients.filter((_, i) => i !== index),
-    }));
-  };
-
-  const handleInstructionChange = (index, value) => {
-    const newInstructions = [...recipe.instructions];
-    newInstructions[index].description = value;
-    setRecipe(prev => ({ ...prev, instructions: newInstructions }));
-  };
-
-  const addInstruction = () => {
-    setRecipe(prev => ({
-      ...prev,
-      instructions: [
-        ...prev.instructions,
-        { step: prev.instructions.length + 1, description: '' },
-      ],
-    }));
-  };
-
-  const removeInstruction = (index) => {
-    const newInstructions = recipe.instructions
-      .filter((_, i) => i !== index)
-      .map((inst, i) => ({ ...inst, step: i + 1 }));
-    setRecipe(prev => ({ ...prev, instructions: newInstructions }));
-  };
-
-  const addTag = () => {
-    if (tagInput.trim() && !recipe.tags.includes(tagInput.trim())) {
-      setRecipe(prev => ({
-        ...prev,
-        tags: [...prev.tags, tagInput.trim()],
-      }));
-      setTagInput('');
+    const { name, value } = e.target;
+    setRecipe(prev => ({ ...prev, [name]: value }));
+    
+    if (name === 'image') {
+      setImagePreview(value);
     }
   };
 
-  const removeTag = (tag) => {
-    setRecipe(prev => ({
-      ...prev,
-      tags: prev.tags.filter(t => t !== tag),
-    }));
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Image must be less than 5MB');
+      return;
+    }
+
+    // Convert to base64 for preview and storage
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result;
+      setImagePreview(base64);
+      setRecipe(prev => ({ ...prev, image: base64 }));
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = async (publish = false) => {
+    if (!recipe.title.trim()) {
+      toast.error('Please enter a recipe title');
+      return;
+    }
+
     setSaving(true);
     
     const recipeData = {
-      ...recipe,
+      title: recipe.title,
+      description: recipe.description || 'Delicious recipe',
+      image: recipe.image || '/images/default-recipe.jpg',
       isPublished: publish ? true : recipe.isPublished,
+      // Default values for required fields
+      prepTime: 15,
+      cookTime: 30,
+      servings: 4,
+      difficulty: 'Easy',
+      category: 'Main Dishes',
+      cuisine: 'International',
+      ingredients: [{ name: 'Ingredient', quantity: '1', unit: 'piece' }],
+      instructions: [{ step: 1, description: 'Prepare and enjoy!' }],
     };
 
     try {
@@ -191,7 +154,7 @@ export default function RecipeEditor() {
       
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center gap-4">
               <Link 
@@ -224,316 +187,139 @@ export default function RecipeEditor() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Basic Info */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">Basic Information</h2>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Recipe Title *
-                  </label>
-                  <input
-                    type="text"
-                    name="title"
-                    value={recipe.title}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
-                    placeholder="E.g: Chicken Tajine with Preserved Lemons"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Description *
-                  </label>
-                  <textarea
-                    name="description"
-                    value={recipe.description}
-                    onChange={handleChange}
-                    rows={3}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
-                    placeholder="A short description of the recipe..."
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Image URL
-                  </label>
-                  <input
-                    type="url"
-                    name="image"
-                    value={recipe.image}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
-                    placeholder="https://example.com/image.jpg"
-                  />
-                  {recipe.image && (
-                    <img 
-                      src={recipe.image} 
-                      alt="Preview" 
-                      className="mt-2 w-32 h-32 object-cover rounded-lg"
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Ingredients */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold text-gray-800">Ingredients</h2>
-                <button
-                  type="button"
-                  onClick={addIngredient}
-                  className="text-orange-600 hover:text-orange-700 font-medium text-sm"
-                >
-                  + Add ingredient
-                </button>
-              </div>
-
-              <div className="space-y-3">
-                {recipe.ingredients.map((ing, index) => (
-                  <div key={index} className="flex gap-3 items-start">
-                    <input
-                      type="text"
-                      value={ing.quantity}
-                      onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
-                      className="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                      placeholder="Qty"
-                    />
-                    <input
-                      type="text"
-                      value={ing.unit}
-                      onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
-                      className="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                      placeholder="Unit"
-                    />
-                    <input
-                      type="text"
-                      value={ing.name}
-                      onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                      placeholder="Ingredient name"
-                    />
-                    {recipe.ingredients.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => removeIngredient(index)}
-                        className="p-2 text-red-500 hover:bg-red-50 rounded-lg"
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Instructions */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold text-gray-800">Instructions</h2>
-                <button
-                  type="button"
-                  onClick={addInstruction}
-                  className="text-orange-600 hover:text-orange-700 font-medium text-sm"
-                >
-                  + Add step
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                {recipe.instructions.map((inst, index) => (
-                  <div key={index} className="flex gap-3 items-start">
-                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <span className="text-orange-600 font-semibold text-sm">{inst.step}</span>
-                    </div>
-                    <textarea
-                      value={inst.description}
-                      onChange={(e) => handleInstructionChange(index, e.target.value)}
-                      rows={2}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                      placeholder={`Step ${inst.step}...`}
-                    />
-                    {recipe.instructions.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => removeInstruction(index)}
-                        className="p-2 text-red-500 hover:bg-red-50 rounded-lg"
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="space-y-6">
+          {/* Title */}
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <label className="block text-lg font-semibold text-gray-800 mb-3">
+              Recipe Title *
+            </label>
+            <input
+              type="text"
+              name="title"
+              value={recipe.title}
+              onChange={handleChange}
+              className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
+              placeholder="Enter recipe name..."
+              required
+            />
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Recipe Details */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">Details</h2>
-              
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Category
-                  </label>
-                  <select
-                    name="category"
-                    value={recipe.category}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  >
-                    {CATEGORIES.map(cat => (
-                      <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                  </select>
-                </div>
+          {/* Description */}
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <label className="block text-lg font-semibold text-gray-800 mb-3">
+              Description
+            </label>
+            <textarea
+              name="description"
+              value={recipe.description}
+              onChange={handleChange}
+              rows={4}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
+              placeholder="Describe your recipe..."
+            />
+          </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Difficulty
-                  </label>
-                  <select
-                    name="difficulty"
-                    value={recipe.difficulty}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  >
-                    {DIFFICULTIES.map(diff => (
-                      <option key={diff} value={diff}>{diff}</option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Prep Time (min)
-                    </label>
-                    <input
-                      type="number"
-                      name="prepTime"
-                      value={recipe.prepTime}
-                      onChange={handleChange}
-                      min="0"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Cook Time (min)
-                    </label>
-                    <input
-                      type="number"
-                      name="cookTime"
-                      value={recipe.cookTime}
-                      onChange={handleChange}
-                      min="0"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Portions
-                  </label>
-                  <input
-                    type="number"
-                    name="servings"
-                    value={recipe.servings}
-                    onChange={handleChange}
-                    min="1"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Cuisine
-                  </label>
-                  <input
-                    type="text"
-                    name="cuisine"
-                    value={recipe.cuisine}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                    placeholder="E.g: Italian"
-                  />
-                </div>
-              </div>
+          {/* Image */}
+          <div className="bg-white rounded-xl shadow-sm p-6">
+            <label className="block text-lg font-semibold text-gray-800 mb-3">
+              Recipe Image
+            </label>
+            
+            {/* Image Type Toggle */}
+            <div className="flex gap-4 mb-4">
+              <button
+                type="button"
+                onClick={() => setImageType('url')}
+                className={`px-4 py-2 rounded-lg font-medium transition ${
+                  imageType === 'url'
+                    ? 'bg-orange-500 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                🔗 URL Link
+              </button>
+              <button
+                type="button"
+                onClick={() => setImageType('upload')}
+                className={`px-4 py-2 rounded-lg font-medium transition ${
+                  imageType === 'upload'
+                    ? 'bg-orange-500 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                📁 Upload File
+              </button>
             </div>
 
-            {/* Tags */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">Tags</h2>
-              
-              <div className="flex gap-2 mb-3">
+            {imageType === 'url' ? (
+              <input
+                type="url"
+                name="image"
+                value={recipe.image?.startsWith('data:') ? '' : recipe.image}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
+                placeholder="https://example.com/image.jpg"
+              />
+            ) : (
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-orange-500 transition">
                 <input
-                  type="text"
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  placeholder="Add a tag"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                  id="image-upload"
                 />
-                <button
-                  type="button"
-                  onClick={addTag}
-                  className="px-4 py-2 bg-orange-100 text-orange-600 rounded-lg hover:bg-orange-200 transition"
-                >
-                  +
-                </button>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {recipe.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm flex items-center gap-1"
-                  >
-                    {tag}
-                    <button
-                      type="button"
-                      onClick={() => removeTag(tag)}
-                      className="text-gray-400 hover:text-red-500"
-                    >
-                      ✕
-                    </button>
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Options */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">Options</h2>
-              
-              <div className="space-y-3">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    name="isFeatured"
-                    checked={recipe.isFeatured}
-                    onChange={handleChange}
-                    className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500"
-                  />
-                  <span className="text-gray-700">Feature this recipe</span>
+                <label htmlFor="image-upload" className="cursor-pointer">
+                  <span className="text-5xl mb-3 block">📷</span>
+                  <span className="text-gray-600">Click to upload an image</span>
+                  <span className="text-gray-400 text-sm block mt-1">Max 5MB - JPG, PNG, GIF</span>
                 </label>
               </div>
-            </div>
+            )}
+
+            {/* Image Preview */}
+            {imagePreview && (
+              <div className="mt-4">
+                <p className="text-sm text-gray-500 mb-2">Preview:</p>
+                <div className="relative w-full h-64 bg-gray-100 rounded-lg overflow-hidden">
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                    onError={() => setImagePreview('')}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setImagePreview('');
+                      setRecipe(prev => ({ ...prev, image: '' }));
+                    }}
+                    className="absolute top-2 right-2 bg-red-500 text-white w-8 h-8 rounded-full hover:bg-red-600 transition"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Quick Actions */}
+          <div className="flex gap-4">
+            <button
+              onClick={() => handleSubmit(false)}
+              disabled={saving}
+              className="flex-1 bg-gray-200 text-gray-700 py-4 rounded-xl font-semibold hover:bg-gray-300 transition disabled:opacity-50 text-lg"
+            >
+              💾 Save Draft
+            </button>
+            <button
+              onClick={() => handleSubmit(true)}
+              disabled={saving}
+              className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 text-white py-4 rounded-xl font-bold hover:shadow-lg transition disabled:opacity-50 text-lg"
+            >
+              🚀 Publish Recipe
+            </button>
           </div>
         </div>
       </main>
