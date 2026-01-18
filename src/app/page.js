@@ -7,10 +7,11 @@ import AdBanner from '@/components/AdBanner';
 
 async function getFeaturedRecipes() {
   try {
-    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/recipes?featured=true&limit=8`, { cache: 'no-store' });
+    const baseUrl = process.env.NEXTAUTH_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+    const res = await fetch(`${baseUrl}/api/save-recipe`, { cache: 'no-store' });
     const data = await res.json();
-    return data.recipes || [];
+    const published = (data.recipes || []).filter(r => r.isPublished);
+    return published.slice(0, 8);
   } catch (error) {
     return [];
   }
@@ -18,10 +19,11 @@ async function getFeaturedRecipes() {
 
 async function getLatestRecipes() {
   try {
-    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/recipes?limit=8`, { cache: 'no-store' });
+    const baseUrl = process.env.NEXTAUTH_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+    const res = await fetch(`${baseUrl}/api/save-recipe`, { cache: 'no-store' });
     const data = await res.json();
-    return data.recipes || [];
+    const published = (data.recipes || []).filter(r => r.isPublished);
+    return published.slice(0, 8);
   } catch (error) {
     return [];
   }
