@@ -49,20 +49,4 @@ export default function RecipeCard({ recipe, index = 0 }) {
     </motion.div>
   );
 }
-                  : 'bg-red-100 text-red-700'
-              }`}>
-                {recipe.difficulty}
-              </div>
-              <span className="text-orange-500 font-semibold text-sm group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                View recipe
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </span>
-            </div>
-          </div>
-        </div>
-      </Link>
-    </motion.div>
-  );
-}
+            
