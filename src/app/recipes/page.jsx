@@ -6,7 +6,7 @@ async function getRecipes(searchParams) {
   const params = await searchParams;
   
   try {
-    const baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+    const baseUrl = process.env.NEXTAUTH_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
     const url = new URL('/api/save-recipe', baseUrl);
     
     const res = await fetch(url.toString(), { cache: 'no-store' });
