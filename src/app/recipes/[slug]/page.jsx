@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import AdBanner from '@/components/AdBanner';
 
 async function getRecipe(id) {
   try {
@@ -66,18 +67,71 @@ export default async function RecipePage({ params }) {
         </Link>
       </div>
 
+      {/* Top Ad Banner */}
+      <div className="max-w-4xl mx-auto px-4 py-6">
+        <AdBanner slot="recipe-top" format="horizontal" />
+      </div>
+
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 -mt-32 relative z-10 pb-20">
+      <div className="max-w-4xl mx-auto px-4 pb-20">
         <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
           <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
             {recipe.title}
           </h1>
           
           {recipe.description && (
-            <p className="text-gray-600 text-lg leading-relaxed">
-              {recipe.description}
-            </p>
+            <div className="prose prose-lg max-w-none">
+              <p className="text-gray-600 text-lg leading-relaxed whitespace-pre-wrap">
+                {recipe.description}
+              </p>
+            </div>
           )}
+
+          {/* Middle Ad Banner */}
+          <div className="my-8 py-4 border-y border-gray-100">
+            <AdBanner slot="recipe-middle" format="rectangle" />
+          </div>
+
+          {/* Share Section */}
+          <div className="mt-8 pt-8 border-t border-gray-100">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
+              Share this recipe 🍴
+            </h3>
+            <div className="flex justify-center gap-4">
+              <a
+                href={`https://www.facebook.com/sharer/sharer.php?u=https://fiduam.com/recipes/${recipe._id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition text-xl font-bold"
+              >
+                f
+              </a>
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(recipe.title)}&url=https://fiduam.com/recipes/${recipe._id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 bg-sky-500 text-white rounded-full flex items-center justify-center hover:bg-sky-600 transition text-xl"
+              >
+                𝕏
+              </a>
+              <a
+                href={`https://pinterest.com/pin/create/button/?url=https://fiduam.com/recipes/${recipe._id}&media=${encodeURIComponent(recipe.image || '')}&description=${encodeURIComponent(recipe.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center hover:bg-red-700 transition text-xl font-bold"
+              >
+                P
+              </a>
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent(recipe.title + ' - https://fiduam.com/recipes/' + recipe._id)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition text-xl"
+              >
+                W
+              </a>
+            </div>
+          </div>
           
           <div className="mt-8 pt-8 border-t border-gray-100 text-center">
             <Link 
@@ -87,6 +141,11 @@ export default async function RecipePage({ params }) {
               Discover More Recipes
             </Link>
           </div>
+        </div>
+
+        {/* Bottom Ad Banner */}
+        <div className="mt-8">
+          <AdBanner slot="recipe-bottom" format="horizontal" />
         </div>
       </div>
     </div>
