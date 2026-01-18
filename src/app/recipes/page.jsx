@@ -4,21 +4,23 @@ import RecipeCard from '@/components/RecipeCard';
 
 async function getRecipes(searchParams) {
   const params = await searchParams;
-  const page = params?.page || 1;
-  const category = params?.category || '';
-  const search = params?.search || '';
   
   try {
-    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const url = new URL('/api/recipes', baseUrl);
-    url.searchParams.set('page', page);
-    url.searchParams.set('limit', '12');
-    if (category) url.searchParams.set('category', category);
-    if (search) url.searchParams.set('search', search);
+    const baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+    const url = new URL('/api/save-recipe', baseUrl);
     
     const res = await fetch(url.toString(), { cache: 'no-store' });
-    return res.json();
+    const data = await res.json();
+    
+    // Filter only published recipes
+    const publishedRecipes = (data.recipes || []).filter(r => r.isPublished);
+    
+    return { 
+      recipes: publishedRecipes, 
+      pagination: { page: 1, pages: 1, total: publishedRecipes.length } 
+    };
   } catch (error) {
+    console.error('Error fetching recipes:', error);
     return { recipes: [], pagination: { page: 1, pages: 1, total: 0 } };
   }
 }
