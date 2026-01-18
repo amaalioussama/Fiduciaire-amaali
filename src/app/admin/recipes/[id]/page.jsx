@@ -104,38 +104,30 @@ export default function RecipeEditor() {
     const recipeData = {
       title: recipe.title,
       description: recipe.description || '',
-      image: recipe.image || '/images/default-recipe.jpg',
-      isPublished: publish ? true : recipe.isPublished,
+      image: recipe.image || '',
+      isPublished: publish,
     };
 
     try {
-      const url = isEditing ? `/api/recipes/${params.id}` : '/api/recipes';
-      const method = isEditing ? 'PUT' : 'POST';
-
-      console.log('Sending recipe data:', recipeData);
-
-      const res = await fetch(url, {
-        method,
+      // Use the new simple save-recipe endpoint
+      const res = await fetch('/api/save-recipe', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(recipeData),
       });
 
-      console.log('Response status:', res.status);
-
       const data = await res.json();
-      console.log('Response data:', data);
 
-      if (!res.ok) {
-        throw new Error(data.error || 'An error occurred');
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to save recipe');
       }
 
-      showMessage('success', isEditing ? 'Recipe updated!' : 'Recipe created!');
+      showMessage('success', 'Recipe saved successfully!');
       
       setTimeout(() => {
         router.push('/admin/dashboard');
       }, 1500);
     } catch (err) {
-      console.error('Error saving recipe:', err);
       showMessage('error', err.message || 'An error occurred');
     } finally {
       setSaving(false);

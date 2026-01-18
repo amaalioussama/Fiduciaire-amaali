@@ -37,20 +37,19 @@ export default function AdminDashboard() {
 
   const fetchRecipes = async () => {
     try {
-      const res = await fetch('/api/recipes?all=true&limit=100');
+      const res = await fetch('/api/save-recipe');
       const data = await res.json();
       
       if (data.recipes) {
         setRecipes(data.recipes);
         
         const published = data.recipes.filter(r => r.isPublished).length;
-        const totalViews = data.recipes.reduce((sum, r) => sum + (r.views || 0), 0);
         
         setStats({
           total: data.recipes.length,
           published,
           drafts: data.recipes.length - published,
-          views: totalViews,
+          views: 0,
         });
       }
     } catch (err) {
