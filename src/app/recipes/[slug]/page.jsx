@@ -234,49 +234,64 @@ export default async function RecipePage({ params }) {
           
           {/* Time & Servings Info Box */}
           {(recipe.preparation_time || recipe.cooking_time || recipe.servings) && (
-            <div className="flex flex-wrap gap-6 bg-orange-50 rounded-2xl p-6 mb-8">
-              {recipe.preparation_time > 0 && (
-                <div className="text-center">
-                  <span className="text-3xl block mb-1">⏱️</span>
-                  <span className="text-sm text-gray-600">Prep Time</span>
-                  <p className="font-bold text-gray-800">{formatTime(recipe.preparation_time)}</p>
-                </div>
-              )}
-              {recipe.cooking_time > 0 && (
-                <div className="text-center">
-                  <span className="text-3xl block mb-1">🍳</span>
-                  <span className="text-sm text-gray-600">Cook Time</span>
-                  <p className="font-bold text-gray-800">{formatTime(recipe.cooking_time)}</p>
-                </div>
-              )}
-              {recipe.total_time > 0 && (
-                <div className="text-center">
-                  <span className="text-3xl block mb-1">⏰</span>
-                  <span className="text-sm text-gray-600">Total Time</span>
-                  <p className="font-bold text-gray-800">{formatTime(recipe.total_time)}</p>
-                </div>
-              )}
-              {recipe.servings > 0 && (
-                <div className="text-center">
-                  <span className="text-3xl block mb-1">👥</span>
-                  <span className="text-sm text-gray-600">Servings</span>
-                  <p className="font-bold text-gray-800">{recipe.servings}</p>
-                </div>
-              )}
+            <div className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span>⏱️</span> Time & Servings
+              </h2>
+              <div className="flex flex-wrap gap-6 bg-orange-50 rounded-2xl p-6">
+                {recipe.preparation_time > 0 && (
+                  <div className="text-center">
+                    <span className="text-3xl block mb-1">⏱️</span>
+                    <span className="text-sm text-gray-600">Prep Time</span>
+                    <p className="font-bold text-gray-800">{formatTime(recipe.preparation_time)}</p>
+                  </div>
+                )}
+                {recipe.cooking_time > 0 && (
+                  <div className="text-center">
+                    <span className="text-3xl block mb-1">🍳</span>
+                    <span className="text-sm text-gray-600">Cook Time</span>
+                    <p className="font-bold text-gray-800">{formatTime(recipe.cooking_time)}</p>
+                  </div>
+                )}
+                {recipe.total_time > 0 && (
+                  <div className="text-center">
+                    <span className="text-3xl block mb-1">⏰</span>
+                    <span className="text-sm text-gray-600">Total Time</span>
+                    <p className="font-bold text-gray-800">{formatTime(recipe.total_time)}</p>
+                  </div>
+                )}
+                {recipe.servings > 0 && (
+                  <div className="text-center">
+                    <span className="text-3xl block mb-1">👥</span>
+                    <span className="text-sm text-gray-600">Servings</span>
+                    <p className="font-bold text-gray-800">{recipe.servings}</p>
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
           {/* Introduction */}
           {recipe.introduction && (
-            <div className="prose prose-lg max-w-none mb-8">
-              <p className="text-gray-700 text-lg leading-relaxed whitespace-pre-wrap">{recipe.introduction}</p>
+            <div className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span>📖</span> Introduction
+              </h2>
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 text-lg leading-relaxed whitespace-pre-wrap">{recipe.introduction}</p>
+              </div>
             </div>
           )}
 
-          {/* Short Description (if no introduction) */}
-          {!recipe.introduction && recipe.description && (
-            <div className="prose prose-lg max-w-none mb-8">
-              <p className="text-gray-600 text-lg leading-relaxed whitespace-pre-wrap">{recipe.description}</p>
+          {/* Description */}
+          {recipe.description && (
+            <div className="mb-10">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span>📝</span> Description
+              </h2>
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-600 text-lg leading-relaxed whitespace-pre-wrap">{recipe.description}</p>
+              </div>
             </div>
           )}
 
