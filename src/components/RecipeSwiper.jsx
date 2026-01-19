@@ -55,11 +55,11 @@ export default function RecipeSwiper({ recipes, title, subtitle }) {
         >
           {recipes.map((recipe) => (
             <SwiperSlide key={recipe._id}>
-              <Link href={`/recipes/${recipe.slug}`} className="block group">
+              <Link href={`/recipes/${recipe._id}`} className="block group">
                 <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform group-hover:-translate-y-2">
                   {/* Image Container */}
                   <div className="relative aspect-[4/3] overflow-hidden">
-                    {recipe.image && recipe.image !== '/images/default-recipe.jpg' ? (
+                    {recipe.image && recipe.image.length > 0 ? (
                       <img
                         src={recipe.image}
                         alt={recipe.title}
@@ -70,23 +70,6 @@ export default function RecipeSwiper({ recipes, title, subtitle }) {
                         <span className="text-7xl">🍽️</span>
                       </div>
                     )}
-                    
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1.5 bg-white/90 backdrop-blur-sm text-orange-600 rounded-full text-sm font-semibold shadow-lg">
-                        {recipe.category}
-                      </span>
-                    </div>
-
-                    {/* Time Badge */}
-                    <div className="absolute top-4 right-4">
-                      <span className="px-3 py-1.5 bg-black/70 backdrop-blur-sm text-white rounded-full text-sm font-medium flex items-center gap-1">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        {recipe.prepTime + recipe.cookTime} min
-                      </span>
-                    </div>
 
                     {/* Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -97,26 +80,11 @@ export default function RecipeSwiper({ recipes, title, subtitle }) {
                     <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-2 group-hover:text-orange-600 transition-colors">
                       {recipe.title}
                     </h3>
-                    <p className="text-gray-500 text-sm line-clamp-2 mb-4">
-                      {recipe.description}
-                    </p>
-                    
-                    {/* Meta Info */}
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                      <div className="flex items-center gap-1 text-gray-500 text-sm">
-                        <span>👥</span>
-                        <span>{recipe.servings} servings</span>
-                      </div>
-                      <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        recipe.difficulty === 'Easy' 
-                          ? 'bg-green-100 text-green-700'
-                          : recipe.difficulty === 'Medium'
-                          ? 'bg-yellow-100 text-yellow-700'
-                          : 'bg-red-100 text-red-700'
-                      }`}>
-                        {recipe.difficulty}
-                      </div>
-                    </div>
+                    {recipe.description && (
+                      <p className="text-gray-500 text-sm line-clamp-2">
+                        {recipe.description}
+                      </p>
+                    )}
                   </div>
                 </div>
               </Link>
