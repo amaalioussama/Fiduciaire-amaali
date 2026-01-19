@@ -1,6 +1,6 @@
 # 🍳 RecettesBlog - Blog de Recettes avec Dashboard Admin
 
-Un blog de recettes moderne construit avec Next.js 15, MongoDB, et optimisé pour la monétisation Google AdSense.
+Un blog de recettes moderne construit avec Next.js 15, MongoDB,
 
 ## 🚀 Fonctionnalités
 
@@ -41,17 +41,6 @@ npm install
 
 3. **Configurer les variables d'environnement**
 
-Créez un fichier `.env.local` à la racine:
-```env
-# MongoDB
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/recettes-blog
-
-# NextAuth
-NEXTAUTH_SECRET=votre-secret-super-securise
-NEXTAUTH_URL=http://localhost:3000
-
-# Google AdSense (optionnel)
-NEXT_PUBLIC_ADSENSE_ID=ca-pub-XXXXXXXXXXXXXXXX
 ```
 
 4. **Lancer le serveur de développement**
@@ -92,25 +81,7 @@ src/
     └── User.js             # Modèle utilisateur
 ```
 
-## 💰 Configuration Google AdSense
 
-1. **Créer un compte AdSense**
-   - Allez sur https://www.google.com/adsense
-   - Créez un compte et attendez l'approbation
-
-2. **Ajouter votre ID AdSense**
-   - Copiez votre ID (format: ca-pub-XXXXXXXXXXXXXXXX)
-   - Ajoutez-le dans `.env.local`:
-   ```env
-   NEXT_PUBLIC_ADSENSE_ID=ca-pub-XXXXXXXXXXXXXXXX
-   ```
-
-3. **Créer des blocs d'annonces**
-   - Dans AdSense, créez des blocs d'annonces
-   - Les emplacements disponibles:
-     - `home-top`, `home-middle`, `home-bottom`
-     - `recipe-top`, `recipe-middle`, `recipe-bottom`
-     - `top-banner`, `in-feed`, `bottom-banner`
 
 ## 🔧 Scripts Disponibles
 
@@ -139,7 +110,6 @@ Le blog est optimisé pour le SEO:
 
 ---
 
-Créé avec ❤️ pour les passionnés de cuisine
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
