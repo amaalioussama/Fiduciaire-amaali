@@ -223,17 +223,13 @@ export default function RecipeEditor() {
       
       const payload = {
         ...recipe,
+        _id: isEditing ? params.id : undefined,
         isPublished: publish,
         ingredients: filteredIngredients,
         steps: filteredSteps.map((s, i) => ({ ...s, step_number: i + 1 })),
         faqs: filteredFaqs,
         nlp_keywords: recipe.nlp_keywords
       };
-      
-      // Add ID if editing
-      if (isEditing) {
-        payload._id = params.id;
-      }
       
       const res = await fetch('/api/save-recipe', {
         method: 'POST',

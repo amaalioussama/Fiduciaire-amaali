@@ -63,13 +63,14 @@ export default function AdminDashboard() {
     if (!confirm('Are you sure you want to delete this recipe?')) return;
 
     try {
-      const res = await fetch(`/api/recipes/${id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/save-recipe?id=${id}`, { method: 'DELETE' });
+      const data = await res.json();
       
-      if (res.ok) {
+      if (data.success) {
         showMessage('success', 'Recipe deleted');
         fetchRecipes();
       } else {
-        showMessage('error', 'Error deleting recipe');
+        showMessage('error', data.error || 'Error deleting recipe');
       }
     } catch (err) {
       showMessage('error', 'Error deleting recipe');
@@ -78,13 +79,20 @@ export default function AdminDashboard() {
 
   const togglePublish = async (recipe) => {
     try {
-      const res = await fetch(`/api/recipes/${recipe._id}`, {
-        method: 'PUT',
+      const res = await fetch('/api/save-recipe', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ isPublished: !recipe.isPublished }),
+        body: JSON.stringify({ 
+          _id: recipe._id,
+          title: recipe.title,
+          description: recipe.description,
+          image: recipe.image,
+          isPublished: !recipe.isPublished 
+        }),
       });
+      const data = await res.json();
       
-      if (res.ok) {
+      if (data.success) {
         showMessage('success', recipe.isPublished ? 'Recipe unpublished' : 'Recipe published');
         fetchRecipes();
       }
@@ -283,7 +291,7 @@ export default function AdminDashboard() {
                           ✏️
                         </Link>
                         <Link
-                          href={`/recipes/${recipe.slug}`}
+                          href={`/recipes/${recipe._id}`}
                           target="_blank"
                           className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition"
                           title="Voir"

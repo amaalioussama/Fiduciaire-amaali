@@ -152,8 +152,14 @@ export async function POST(request) {
     let recipe;
     
     // If ID provided, update existing recipe
-    if (body._id) {
+    if (body._id && body._id !== 'new' && body._id !== 'undefined') {
       recipe = await Recipe.findByIdAndUpdate(body._id, recipeData, { new: true });
+      if (!recipe) {
+        return NextResponse.json({ 
+          success: false, 
+          error: 'Recipe not found' 
+        }, { status: 404 });
+      }
     } else {
       recipe = new Recipe(recipeData);
       await recipe.save();
@@ -187,6 +193,44 @@ export async function GET() {
     });
     
   } catch (error) {
+    return NextResponse.json({ 
+      success: false, 
+      error: error.message 
+    }, { status: 500 });
+  }
+}
+
+// DELETE - Delete a recipe by ID (passed in query string)
+export async function DELETE(request) {
+  try {
+    await connectDB();
+    
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    
+    if (!id) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Recipe ID is required' 
+      }, { status: 400 });
+    }
+    
+    const deleted = await Recipe.findByIdAndDelete(id);
+    
+    if (!deleted) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Recipe not found' 
+      }, { status: 404 });
+    }
+    
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Recipe deleted successfully' 
+    });
+    
+  } catch (error) {
+    console.error('Delete error:', error);
     return NextResponse.json({ 
       success: false, 
       error: error.message 
