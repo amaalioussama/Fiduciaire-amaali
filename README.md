@@ -1,115 +1,22 @@
-# 🍳 RecettesBlog - Blog de Recettes avec Dashboard Admin
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-Un blog de recettes moderne construit avec Next.js 15, MongoDB,
+## Getting Started
 
-## 🚀 Fonctionnalités
+First, run the development server:
 
-### Public
-- ✅ Page d'accueil avec recettes à la une
-- ✅ Liste de recettes avec filtres par catégorie
-- ✅ Pages de recettes individuelles avec SEO optimisé
-- ✅ Schema.org pour les recettes (Google Rich Snippets)
-- ✅ Partage social (Facebook, Twitter, Pinterest, WhatsApp)
-- ✅ Design responsive et moderne
-- ✅ Emplacements publicitaires Google AdSense
-
-### Dashboard Admin
-- ✅ Authentification sécurisée (NextAuth.js)
-- ✅ CRUD complet pour les recettes
-- ✅ Gestion des brouillons et publications
-- ✅ Statistiques (vues, recettes publiées)
-- ✅ Éditeur de recettes complet (ingrédients, étapes, tags)
-
-## 📋 Prérequis
-
-- Node.js 18+
-- MongoDB (local ou Atlas)
-- Compte Google AdSense (pour la monétisation)
-
-## 🛠️ Installation
-
-1. **Cloner le projet**
-```bash
-git clone <votre-repo>
-cd recettes-blog
-```
-
-2. **Installer les dépendances**
-```bash
-npm install
-```
-
-3. **Configurer les variables d'environnement**
-
-```
-
-4. **Lancer le serveur de développement**
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-5. **Créer le compte admin**
-- Allez sur `http://localhost:3000/admin/login`
-- Cliquez sur "Premier accès? Créer un compte admin"
-- Remplissez le formulaire
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 📁 Structure du Projet
-
-```
-src/
-├── app/
-│   ├── admin/              # Dashboard admin
-│   │   ├── dashboard/      # Page principale
-│   │   ├── login/          # Connexion
-│   │   └── recipes/[id]/   # Éditeur de recettes
-│   ├── api/
-│   │   ├── auth/           # API NextAuth
-│   │   └── recipes/        # API CRUD recettes
-│   ├── recettes/           # Pages publiques
-│   │   └── [slug]/         # Page recette
-│   ├── layout.js           # Layout principal
-│   └── page.js             # Homepage
-├── components/
-│   ├── AdBanner.jsx        # Composant publicité
-│   ├── BlogHeader.jsx      # Header
-│   ├── BlogFooter.jsx      # Footer
-│   └── RecipeSchema.jsx    # Schema.org
-├── lib/
-│   └── mongodb.js          # Connexion DB
-└── models/
-    ├── Recipe.js           # Modèle recette
-    └── User.js             # Modèle utilisateur
-```
-
-
-
-## 🔧 Scripts Disponibles
-
-```bash
-npm run dev      # Développement
-npm run build    # Build production
-npm run start    # Lancer en production
-npm run lint     # Vérification ESLint
-```
-
-## 🌐 Déploiement
-
-### Vercel (Recommandé)
-1. Connectez votre repo GitHub à Vercel
-2. Configurez les variables d'environnement
-3. Déployez!
-
-## 📈 Optimisation SEO
-
-Le blog est optimisé pour le SEO:
-- ✅ Métadonnées dynamiques
-- ✅ Schema.org pour les recettes
-- ✅ Sitemap automatique
-- ✅ OpenGraph & Twitter Cards
-- ✅ URLs propres avec slugs
-
----
-
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
